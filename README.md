@@ -6,12 +6,13 @@ This is the software for the test-tap interface.
 
 ### Prerequisites
 
-You will need screeon, python serial for human-human interactions.
+You will need screen, python serial to run this software.
 
 ```
 sudo apt-get update
 sudo apt-get install screen
 sudo apt-get install python-serial
+sudo apt-get install python-numpy
 ```
 
 For human-robot interactions, you will need the packages for human-human interactions and naopy and numpy
@@ -28,7 +29,7 @@ For Naoqi for python refer to the follow website
 ### Run the software
 
 ```
-dasl-tap-record install
+./dasl-tap-record install
 dasl-tap-record start # this will start the audio recording and data loggin script
 ```
 
@@ -36,6 +37,7 @@ to stop
 
 ```
 dasl-tap-record stop
+and press the center button or CTRL-C
 ```
 
 or CTRL-C if not sent to the background.
