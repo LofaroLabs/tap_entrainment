@@ -5,7 +5,7 @@ This is the software for the test-tap interface.
 ## Get Started
 
 ### Prerequisites
-
+This assumes your are using Ubuntu 16.04 LTS
 You will need screen, python serial to run this software.
 
 ```
