@@ -87,7 +87,7 @@ try:
 			played3 = True
 			f.write("B 3"\r\n)
 			print("trial",trialCount)
-			if(trialCount != 10):
+			if(trialCount != 9):
 				startTime = time.time()
 				print("trial: ",trialCount)
 				trialCount += 1
