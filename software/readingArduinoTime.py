@@ -34,6 +34,8 @@ timeDiff = 0
 
 tDiff = 0
 
+trialCount = 0
+
 played1 = False # use these variables to play the tones only once
 
 played2 = False
@@ -75,12 +77,26 @@ try:
 		if(time.time() > (startTime + 20) and played1 == False):
 			os.system("aplay beep-06.wav &")
 			played1 = True # so tone doesn't play every loop
+			f.write("B 1\r\n")
 		if(time.time() > (startTime + 40) and played2 == False):
 			os.system("aplay beep-06.wav &")
 			played2 = True # so tone doesn't play every loop
+			f.write("B 2\r\n")
 		if(time.time() > (startTime + 60) and played3 == False):
 			os.system("aplay beep-06.wav &")
 			played3 = True
+			f.write("B 3"\r\n)
+			print("trial",trialCount)
+			if(trialCount != 10):
+				startTime = time.time()
+				print("trial: ",trialCount)
+				trialCount += 1
+				played1 = False
+				played2 = False
+				played3 = False
+				
+			else:
+				break
 		if(ard.inWaiting()):
 			msg = (ard.read(3))
 			
