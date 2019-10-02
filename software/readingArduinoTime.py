@@ -85,7 +85,7 @@ try:
 		if(time.time() > (startTime + 60) and played3 == False):
 			os.system("aplay beep-06.wav &")
 			played3 = True
-			f.write("B 3"\r\n)
+			f.write("B 3\r\n")
 			print("trial",trialCount)
 			if(trialCount != 9):
 				startTime = time.time()
