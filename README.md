@@ -31,7 +31,7 @@ For Naoqi for python refer to the follow website
 
 ```
 ./dasl-tap-record install
-dasl-tap-record start # this will start the audio recording and data loggin script
+dasl-tap-record start # this will start the audio recording and data logging script
 ```
 
 to stop 
