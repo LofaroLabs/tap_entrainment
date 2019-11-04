@@ -138,9 +138,9 @@ try:
 					timeDiff = unpackULong(msg,buf4)
 
 					if(buf4 == 1):
-						f.write("D -"+str(timeDiff)+" diff "+"\r\n")
+						f.write("D -"+str(timeDiff)+" diff"+"\r\n")
 					elif(buf4 == 0):
-						f.write("D "+str(timeDiff)+" diff "+"\r\n")
+						f.write("D "+str(timeDiff)+" diff"+"\r\n")
 
 					timeout = 0
 			else:
