@@ -9,7 +9,7 @@ import math
 #import forwardKinematics 
 import qi
 
-bpm = 60.0# 60 bpm by default
+bpm = 90.0
 
 ### max is 90 bpm or 1.5 Hz reliably.
 
@@ -53,43 +53,11 @@ def main(robotIP):
 
     #pTargetAngles0Lfk = [ (96.99678999),10.55418621,10.55418621,-40.52489326, 0 ]
     
-    pTargetAnglesL = pTargetAngles0L
+    pTargetAnglesL = pTargetAngles1L
     pTargetAnglesRadL = [0.0] * 6
     for a in range(len(pTargetAnglesL)):
 	pTargetAnglesRadL[a] = math.radians(pTargetAnglesL[a])
     motionProxy.setAngles(pLArm, pTargetAnglesRadL, 0.5)
-    startingTime = time.time()
-    count = 0
-    pMaxSpeedFraction = 0.99
-    motion1T = 0
-    motion2T = 0
-    tap =0
-    while(True):
-	    if(count==1):
-		if(pTargetAngles0L==pTargetAnglesL):
-			pTargetAnglesL = pTargetAngles1L
-		else:
-			pTargetAnglesL = pTargetAngles0L	
-		count = 0
-
-		for a in range(len(pTargetAnglesL)):
-			pTargetAnglesRadL[a] = math.radians(pTargetAnglesL[a])
-
-                tic = time.time()
-		motionProxy.angleInterpolationWithSpeed(pLArm, pTargetAnglesRadL, pMaxSpeedFraction)# takes ~.35 sec
-		motion2T = motion1T
-		motion1T = (time.time()-tic)
-		#print(motion1T,motion2T)
-	    else:
-		motionProxy.setAngles(pLArm, pTargetAnglesRadL, pMaxSpeedFraction)
-	    count += 1
-	    tap += 1
-	    if(tap == 2):
-	      tDelay = (1/(bpm/60.0)) - (motion1T + motion2T)
-              #print(tDelay)
-	      if(tDelay>0):
-		time.sleep(tDelay)
-	      tap = 0
 
 if __name__ == "__main__":
     robotIp = "127.0.0.1"
@@ -98,8 +66,4 @@ if __name__ == "__main__":
         print "Usage python motion_poseZero.py robotIP (optional default: 127.0.0.1)"
     elif len(sys.argv) <= 2:
         robotIp = sys.argv[1]
-    else:
-	robotIp = sys.argv[1]
-	bpm = float(sys.argv[2])
-    #print(bpm)
     main(robotIp)
