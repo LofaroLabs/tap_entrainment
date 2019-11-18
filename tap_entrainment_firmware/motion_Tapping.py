@@ -9,7 +9,7 @@ import math
 #import forwardKinematics 
 import qi
 
-bpm = 60.0# 60 bpm by default
+bpm = 90.0# 60 bpm by default
 
 ### max is 90 bpm or 1.5 Hz reliably.
 
@@ -43,50 +43,53 @@ def main(robotIP):
     # Set NAO in Stiffness On
     StiffnessOn(motionProxy)
 
-    pLArm = "LArm"
+    pRArm = "RArm"
 
 
     # [115.59515097  20.11797839  20.11797839 -76.84603986   0.        ]
     offset = -10
-    pTargetAngles0L = [ (75),12.21749182,-90, -63.51705609+offset, 90 ] 
-    pTargetAngles1L = [ (75),12.21749182,-90, -80.51705609+offset, 90 ] 
-
+    #pTargetAngles0R = [ (75),12.21749182,-90, -63.51705609+offset, 90 ] 
+    #pTargetAngles1R = [ (75),12.21749182,-90, -80.51705609+offset, 90 ] 
+    pTargetAngles1R = [ 70,-12.2,90,88.5, -90,1 ]
+    pTargetAngles0R = [ 70,-12.2,90,88.5-10, -90,1]
     #pTargetAngles0Lfk = [ (96.99678999),10.55418621,10.55418621,-40.52489326, 0 ]
     
-    pTargetAnglesL = pTargetAngles0L
-    pTargetAnglesRadL = [0.0] * 6
-    for a in range(len(pTargetAnglesL)):
-	pTargetAnglesRadL[a] = math.radians(pTargetAnglesL[a])
-    motionProxy.setAngles(pLArm, pTargetAnglesRadL, 0.5)
+    pTargetAnglesR = pTargetAngles0R
+    pTargetAnglesRadR = [0.0] * 6
+    for a in range(len(pTargetAnglesR)):
+	pTargetAnglesRadR[a] = math.radians(pTargetAnglesR[a])
+    motionProxy.setAngles(pRArm, pTargetAnglesRadR, 0.5)
+    #motionProxy.openHand("RHand")
     startingTime = time.time()
     count = 0
     pMaxSpeedFraction = 0.99
     motion1T = 0
     motion2T = 0
     tap =0
+    #print(bpm)
     while(True):
 	    if(count==1):
-		if(pTargetAngles0L==pTargetAnglesL):
-			pTargetAnglesL = pTargetAngles1L
+		if(pTargetAngles0R==pTargetAnglesR):
+			pTargetAnglesR = pTargetAngles1R
 		else:
-			pTargetAnglesL = pTargetAngles0L	
+			pTargetAnglesR = pTargetAngles0R	
 		count = 0
 
-		for a in range(len(pTargetAnglesL)):
-			pTargetAnglesRadL[a] = math.radians(pTargetAnglesL[a])
+		for a in range(len(pTargetAnglesR)):
+			pTargetAnglesRadR[a] = math.radians(pTargetAnglesR[a])
 
                 tic = time.time()
-		motionProxy.angleInterpolationWithSpeed(pLArm, pTargetAnglesRadL, pMaxSpeedFraction)# takes ~.35 sec
+		motionProxy.angleInterpolationWithSpeed(pRArm, pTargetAnglesRadR , pMaxSpeedFraction)# takes ~.35 sec
 		motion2T = motion1T
 		motion1T = (time.time()-tic)
-		#print(motion1T,motion2T)
+		print(motion1T,motion2T)
 	    else:
-		motionProxy.setAngles(pLArm, pTargetAnglesRadL, pMaxSpeedFraction)
+		motionProxy.setAngles(pRArm, pTargetAnglesRadR, pMaxSpeedFraction)
 	    count += 1
 	    tap += 1
 	    if(tap == 2):
 	      tDelay = (1/(bpm/60.0)) - (motion1T + motion2T)
-              #print(tDelay)
+              print(tDelay)
 	      if(tDelay>0):
 		time.sleep(tDelay)
 	      tap = 0
@@ -100,6 +103,7 @@ if __name__ == "__main__":
         robotIp = sys.argv[1]
     else:
 	robotIp = sys.argv[1]
-	bpm = float(sys.argv[2])
-    #print(bpm)
+	bpm = float(sys.argv[2])*60.0
+        print(bpm)
+    print(bpm)
     main(robotIp)

@@ -43,21 +43,21 @@ def main(robotIP):
     # Set NAO in Stiffness On
     StiffnessOn(motionProxy)
 
-    pLArm = "LArm"
+    pRArm = "RArm"
 
 
     # [115.59515097  20.11797839  20.11797839 -76.84603986   0.        ]
     offset = -10
-    pTargetAngles0L = [ (75),12.21749182,-90, -63.51705609+offset, 90 ] 
-    pTargetAngles1L = [ (75),12.21749182,-90, -80.51705609+offset, 90 ] 
-
+    #pTargetAngles0L = [ (75),12.21749182,-90, -63.51705609+offset, 90 ] 
+    #pTargetAngles1L = [ (75),12.21749182,-90, -80.51705609+offset, 90 ] 
+    pTargetAngles1L = [ 70,-12.2,90,88.5, -90 ]
     #pTargetAngles0Lfk = [ (96.99678999),10.55418621,10.55418621,-40.52489326, 0 ]
     
     pTargetAnglesL = pTargetAngles1L
     pTargetAnglesRadL = [0.0] * 6
     for a in range(len(pTargetAnglesL)):
 	pTargetAnglesRadL[a] = math.radians(pTargetAnglesL[a])
-    motionProxy.setAngles(pLArm, pTargetAnglesRadL, 0.5)
+    motionProxy.setAngles(pRArm, pTargetAnglesRadL, 0.5)
 
 if __name__ == "__main__":
     robotIp = "127.0.0.1"

@@ -37,7 +37,7 @@ Start()
 	cd $INSTALL_DIR
 	#python $INSTALL_DIR$TAP_RECORD_FILE $TOUCH_PORT $RECORD_DIR/logs
 	screen -S $SCREEN_GET_TAPS -d -m python $INSTALL_DIR/$TAP_RECORD_FILE $TOUCH_PORT $RECORD_DIR/logs
-	python $INSTALL_DIR$NAO_TAPPING_FILE nao.local 60
+	python $INSTALL_DIR$NAO_TAPPING_FILE nao.local $1
 }
 
 Stop()
@@ -70,7 +70,7 @@ ShowUsage()
 
 case "$1" in
 	'start' )
-		Start
+		Start "$2"
 	;;
 	'stop' )
 		Stop
