@@ -67,7 +67,7 @@ def main(robotIP):
     motion2T = 0
     tap =0
     #print(bpm)
-    while(True):
+    while(startingTime + 150 > time.time()):
 	    if(count==1):
 		if(pTargetAngles0R==pTargetAnglesR):
 			pTargetAnglesR = pTargetAngles1R
@@ -82,14 +82,14 @@ def main(robotIP):
 		motionProxy.angleInterpolationWithSpeed(pRArm, pTargetAnglesRadR , pMaxSpeedFraction)# takes ~.35 sec
 		motion2T = motion1T
 		motion1T = (time.time()-tic)
-		print(motion1T,motion2T)
+		#print(motion1T,motion2T)
 	    else:
 		motionProxy.setAngles(pRArm, pTargetAnglesRadR, pMaxSpeedFraction)
 	    count += 1
 	    tap += 1
 	    if(tap == 2):
 	      tDelay = (1/(bpm/60.0)) - (motion1T + motion2T)
-              print(tDelay)
+              #print(tDelay)
 	      if(tDelay>0):
 		time.sleep(tDelay)
 	      tap = 0
