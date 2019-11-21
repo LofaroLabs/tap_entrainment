@@ -53,7 +53,6 @@ def main(robotIP):
     pTargetAngles1R = [ 70,-12.2,90,88.5, -90,1 ]
     pTargetAngles0R = [ 70,-12.2,90,88.5-10, -90,1]
     #pTargetAngles0Lfk = [ (96.99678999),10.55418621,10.55418621,-40.52489326, 0 ]
-    
     pTargetAnglesR = pTargetAngles0R
     pTargetAnglesRadR = [0.0] * 6
     for a in range(len(pTargetAnglesR)):
@@ -93,7 +92,10 @@ def main(robotIP):
 	      if(tDelay>0):
 		time.sleep(tDelay)
 	      tap = 0
-
+    pTargetAnglesR = pTargetAngles1R
+    for a in range(len(pTargetAnglesR)):
+        pTargetAnglesRadR[a] = math.radians(pTargetAnglesR[a])
+    motionProxy.setAngles(pRArm,pTargetAnglesRadR,pMaxSpeedFraction)
 if __name__ == "__main__":
     robotIp = "127.0.0.1"
 
